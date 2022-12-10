@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   scroll-behavior: smooth;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+  opacity: 0;
 }

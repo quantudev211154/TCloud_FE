@@ -1,0 +1,6 @@
+export const HOST = 'http://localhost:8000/api/v1/'
+export const LOGIN_API = HOST + 'login'
+export const REGISTER_API = HOST + 'register'
+export const LOGOUT_API = HOST + 'logout/'
+export const CHECK_EXISTING_PHONE_API = HOST + 'check-existing-phone/'
+export const REFRESH_TOKEN_API = HOST + 'tcloud_refresh_token'

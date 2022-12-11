@@ -31,7 +31,7 @@ const Tooltip = ({ title, children, placement = 'bottom' }: Props) => {
   }
 
   return (
-    <div className='relative inline-block'>
+    <div className='relative inline-block h-full z-50'>
       <span
         ref={ref}
         className={`w-max h-max text-sm text-white font-medium pointer-events-none px-3 py-2 bg-gray-400 rounded-lg transition-all transform absolute -bottom-2 
@@ -43,7 +43,11 @@ const Tooltip = ({ title, children, placement = 'bottom' }: Props) => {
       >
         {title}
       </span>
-      <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
+      <div
+        className='w-full h-full'
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
+      >
         {children}
       </div>
     </div>

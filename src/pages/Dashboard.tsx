@@ -6,13 +6,11 @@ import { useEffect } from 'react'
 import LoadingAuth from '../components/loading_auth/LoadingAuth'
 
 const Dashboard = () => {
-  const { isAuth, isLoading, checkAuth, currentUser } = useAuthContext()
+  const { isAuth, isLoading, checkAuth } = useAuthContext()
 
   useEffect(() => {
     const authenticate = async () => {
       await checkAuth()
-
-      if (currentUser) document.title = `Hi! ${currentUser.fullName}`
     }
 
     authenticate()
@@ -27,7 +25,9 @@ const Dashboard = () => {
       <Sidebar />
       <div className='flex-1 flex flex-col justify-start items-center'>
         <Header />
-        <Outlet />
+        <div className='flex-1 w-full px-3'>
+          <Outlet />
+        </div>
       </div>
     </div>
   )

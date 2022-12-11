@@ -1,9 +1,12 @@
-import React from 'react'
-
-type Props = {}
-
-const Header = (props: Props) => {
-  return <div className='flex-initial w-full bg-slate-300 py-6'>Header</div>
+import Search from './search/Search'
+import Tool from './tool/Tool'
+const Header = () => {
+  return (
+    <div className='flex-initial flex justify-between items-center w-full px-3 min-h-[11vh]'>
+      <Search />
+      <Tool />
+    </div>
+  )
 }
 
 export default Header

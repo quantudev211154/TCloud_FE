@@ -19,6 +19,8 @@ class Jwt {
   getCurrentUserId = () => this.currentUserID
 
   killAllToken = () => {
+    delete http.defaults.headers.common['Authorization']
+
     this.inMemoryAccessToken = null
 
     if (this.getNewAccessTokenTimeoutId) {
@@ -32,7 +34,7 @@ class Jwt {
     try {
       const response = await http.get<LoginSuccessType>(REFRESH_TOKEN_API)
 
-      this.inMemoryAccessToken = response.data.accessToken
+      this.setAccessToken(response.data.accessToken)
 
       return response.data.user
     } catch (error) {
@@ -43,6 +45,8 @@ class Jwt {
 
   setAccessToken = (accessToken: string) => {
     this.inMemoryAccessToken = accessToken
+
+    http.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
 
     const { userId, exp, iat } = jwtDecode<JwtPayload & { userId: string }>(
       accessToken
@@ -56,10 +60,12 @@ class Jwt {
   }
 
   private startGetNewAccessTokenLoop = (delay: number) => {
-    this.getNewAccessTokenTimeoutId = window.setInterval(
-      this.getNewAccessToken,
-      delay * 1000 - 5000
-    )
+    if (!this.getNewAccessTokenTimeoutId) {
+      this.getNewAccessTokenTimeoutId = window.setInterval(
+        this.getNewAccessToken,
+        delay * 1000 - 5000
+      )
+    }
   }
 }
 

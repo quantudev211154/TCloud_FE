@@ -12,10 +12,13 @@ import {
 } from '../constants/firebase.constant'
 import {
   FirebaseStorage,
-  getDownloadURL,
   getStorage,
   ref,
+  getDownloadURL,
+  uploadBytesResumable,
 } from 'firebase/storage'
+import { AddPostType } from '../types/post.type'
+import { generateFirebaseFilename, getTypeOfFile } from '../utils/post.util'
 
 class MyFirebase {
   private firebaseApp: FirebaseApp
@@ -91,6 +94,41 @@ class MyFirebase {
       .catch(() => {
         if (reject) reject()
       })
+  }
+
+  uploadFile = async (
+    userId: string,
+    file: File,
+    handleUploaded: Function,
+    handleUploading?: Function
+  ) => {
+    try {
+      const fileRef = ref(this.storage, generateFirebaseFilename(file.name))
+
+      const uploadTask = uploadBytesResumable(fileRef, file)
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          if (handleUploading) handleUploading()
+        },
+        (err) => console.log(err),
+        async () => {
+          const dowloadUrl = await getDownloadURL(uploadTask.snapshot.ref)
+
+          const data: AddPostType = {
+            fileName: file.name,
+            fileUrl: dowloadUrl,
+            type: getTypeOfFile(file.name),
+            userId,
+          }
+
+          handleUploaded(data)
+        }
+      )
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

@@ -1,9 +1,31 @@
-import React from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { getPosts } from '../../../apis/post.api'
+import { useAuthContext } from '../../../context/auth.context'
+import FilesList from '../../files-list/FilesList'
 
-type Props = {}
+const MyFiles = () => {
+  const { currentUser } = useAuthContext()
+  const { data, isSuccess } = useQuery({
+    queryKey: ['posts', currentUser],
+    queryFn: () => getPosts(currentUser?.id),
+  })
 
-const MyFiles = (props: Props) => {
-  return <div>MyFiles</div>
+  useEffect(() => {
+    if (currentUser) {
+      document.title = `Hi! ${currentUser.fullName}`
+    }
+  }, [])
+
+  if (isSuccess) {
+    return (
+      <div className='overflow-hidden'>
+        <FilesList postsList={data.data.posts} />
+      </div>
+    )
+  }
+
+  return <div></div>
 }
 
 export default MyFiles

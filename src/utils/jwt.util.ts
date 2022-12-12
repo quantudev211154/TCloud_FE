@@ -5,26 +5,24 @@ import http from './http.util'
 
 class Jwt {
   private inMemoryAccessToken: string | null
-  private getNewAccessTokenTimeoutId: number | null
-  private currentUserID: string | null
+  private getNewAccessTokenIntervalId: number | null
 
   constructor() {
     this.inMemoryAccessToken = null
-    this.getNewAccessTokenTimeoutId = null
-    this.currentUserID = null
+    this.getNewAccessTokenIntervalId = null
   }
 
   getInMemoryAccessToken = () => this.inMemoryAccessToken
-
-  getCurrentUserId = () => this.currentUserID
 
   killAllToken = () => {
     delete http.defaults.headers.common['Authorization']
 
     this.inMemoryAccessToken = null
 
-    if (this.getNewAccessTokenTimeoutId) {
-      window.clearTimeout(this.getNewAccessTokenTimeoutId)
+    if (this.getNewAccessTokenIntervalId) {
+      window.clearInterval(this.getNewAccessTokenIntervalId)
+
+      this.getNewAccessTokenIntervalId = null
     }
 
     return true
@@ -48,11 +46,7 @@ class Jwt {
 
     http.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
 
-    const { userId, exp, iat } = jwtDecode<JwtPayload & { userId: string }>(
-      accessToken
-    )
-
-    this.currentUserID = userId
+    const { exp, iat } = jwtDecode<JwtPayload>(accessToken)
 
     this.startGetNewAccessTokenLoop((exp as number) - (iat as number))
 
@@ -60,8 +54,8 @@ class Jwt {
   }
 
   private startGetNewAccessTokenLoop = (delay: number) => {
-    if (!this.getNewAccessTokenTimeoutId) {
-      this.getNewAccessTokenTimeoutId = window.setInterval(
+    if (!this.getNewAccessTokenIntervalId) {
+      this.getNewAccessTokenIntervalId = window.setInterval(
         this.getNewAccessToken,
         delay * 1000 - 5000
       )

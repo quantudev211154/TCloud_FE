@@ -6,3 +6,4 @@ export const CHECK_EXISTING_PHONE_API = HOST + 'auth/check-existing-phone/'
 export const REFRESH_TOKEN_API = HOST + 'tcloud_refresh_token'
 
 export const ADD_POST_API = HOST + 'posts'
+export const GET_POSTS_API = HOST + 'posts/'

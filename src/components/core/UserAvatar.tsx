@@ -19,7 +19,7 @@ const UserAvatar = ({ bgr, name, className }: Props) => {
       }`}
     >
       {bgr.startsWith('#') ? (
-        <span className='text-white font-semibold text-lg'>
+        <span className='text-white font-semibold'>
           {name ? createAvatarName(name) : ''}
         </span>
       ) : (

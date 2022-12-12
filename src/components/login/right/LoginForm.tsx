@@ -22,7 +22,6 @@ const LoginForm = () => {
   const { setIsAuth, setCurrentUser } = useAuthContext()
   const btnSubmitSpanChildRef = useRef<HTMLSpanElement>(null)
   const displayLoginResultRef = useRef<HTMLParagraphElement>(null)
-  let timer = -1
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => await login(data),
@@ -33,6 +32,8 @@ const LoginForm = () => {
       navigate('/')
     },
     onError: (error: AxiosError) => {
+      let timer = -1
+
       if (
         btnSubmitSpanChildRef.current &&
         displayLoginResultRef.current &&

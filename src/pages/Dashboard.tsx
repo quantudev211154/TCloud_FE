@@ -6,11 +6,15 @@ import { useEffect } from 'react'
 import LoadingAuth from '../components/loading_auth/LoadingAuth'
 
 const Dashboard = () => {
-  const { isAuth, isLoading, checkAuth } = useAuthContext()
+  const { isAuth, isLoading, checkAuth, currentUser } = useAuthContext()
 
   useEffect(() => {
     const authenticate = async () => {
       await checkAuth()
+
+      if (currentUser) {
+        document.title = `Hi! ${currentUser.fullName}`
+      }
     }
 
     authenticate()

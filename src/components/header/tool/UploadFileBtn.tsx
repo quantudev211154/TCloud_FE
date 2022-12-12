@@ -1,17 +1,29 @@
-import { BiFile } from 'react-icons/bi'
-import { useState } from 'react'
+import { AiOutlineFileAdd } from 'react-icons/ai'
 import FirebaseService from '../../../services/firebase'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AddPostType } from '../../../types/post.type'
 import { addPost } from '../../../apis/post.api'
 import { useAuthContext } from '../../../context/auth.context'
 
 const UploadFileBtn = () => {
   const { currentUser } = useAuthContext()
-  const [uploadFiles, setUploadFiles] = useState<FileList | null>(null)
+  const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
-    mutationFn: async (data: AddPostType) => await addPost(data),
+    mutationFn: (data: AddPostType) => addPost(data),
+    onSuccess: (data) => {
+      queryClient.setQueryData(['posts', currentUser], (oldData: any) =>
+        oldData
+          ? {
+              ...oldData,
+              data: {
+                ...oldData.data,
+                posts: [...oldData.data.posts, data.data.newPost],
+              },
+            }
+          : oldData
+      )
+    },
   })
 
   const onUploadFileSuccess = (data: AddPostType) => {
@@ -42,7 +54,7 @@ const UploadFileBtn = () => {
       htmlFor='upload-file'
     >
       <span className='text-2xl'>
-        <BiFile />
+        <AiOutlineFileAdd />
       </span>
       <span className='ml-3'>Upload new file</span>
       <input

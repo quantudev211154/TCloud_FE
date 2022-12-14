@@ -1,6 +1,6 @@
 import { PostType } from '../../types/post.type'
 import FileListHeader from '../file-list-header/FileListHeader'
-import { convertISODateToDayMonthYearFormat } from './../../../../server/src/utils/date.util'
+import FileItem from './FileItem'
 
 type Props = {
   postsList: PostType[]
@@ -8,25 +8,25 @@ type Props = {
 
 const FilesList = ({ postsList }: Props) => {
   return (
-    <table className='w-full flex-1 overflow-hidden overflow-y-auto'>
-      <thead>
-        <FileListHeader />
-      </thead>
-      <tbody>
-        {postsList.map((item, index) => (
-          <tr key={item.id}>
-            <td className='py-3'>{index + 1}</td>
-            <td
-              title={item.fileName}
-              className='max-w-[20rem] md:max-w-none whitespace-nowrap overflow-hidden text-ellipsis break-all'
-            >
-              {item.fileName}
-            </td>
-            <td>{convertISODateToDayMonthYearFormat(item.createdAt)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className='h-full overflow-y-auto'>
+      <table className='w-full flex-1 text-left'>
+        <thead className='sticky top-0'>
+          <FileListHeader />
+        </thead>
+        <tbody className='overflow-y-scroll'>
+          {postsList.map((item) => (
+            <FileItem key={item.id} item={item} />
+          ))}
+        </tbody>
+      </table>
+      {postsList.length === 0 ? (
+        <p className='py-10 text-center italic font-medium'>
+          Nothing to show. Let's store some your files.
+        </p>
+      ) : (
+        <></>
+      )}
+    </div>
   )
 }
 

@@ -12,25 +12,31 @@ import MenuContextProvider from './context/menu.context'
 import MyFiles from './components/dashboard/my-files/MyFiles'
 import FavoriteFiles from './components/dashboard/favorite-files/FavoriteFiles'
 import RecycleBinFiles from './components/dashboard/recycle-bin-files/RecycleBinFiles'
+import FileMenuContextProvider from './context/file-menu-context.context'
 
 function App() {
   return (
     <AuthContextProvider>
       <MenuContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path='login' element={<Login />} />
-            <Route path='register' element={<Register />} />
-            <Route path='confirm-otp' element={<ConfirmOTP />} />
-            <Route path='forget-password' element={<ForgetPassword />} />
-            <Route path='' element={<Dashboard />}>
-              <Route index element={<MyFiles />} />
-              <Route path='/favorite-files' element={<FavoriteFiles />} />
-              <Route path='/recycle-bin-files' element={<RecycleBinFiles />} />
-            </Route>
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <FileMenuContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path='login' element={<Login />} />
+              <Route path='register' element={<Register />} />
+              <Route path='confirm-otp' element={<ConfirmOTP />} />
+              <Route path='forget-password' element={<ForgetPassword />} />
+              <Route path='' element={<Dashboard />}>
+                <Route index element={<MyFiles />} />
+                <Route path='/favorite-files' element={<FavoriteFiles />} />
+                <Route
+                  path='/recycle-bin-files'
+                  element={<RecycleBinFiles />}
+                />
+              </Route>
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </FileMenuContextProvider>
       </MenuContextProvider>
     </AuthContextProvider>
   )

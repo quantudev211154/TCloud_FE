@@ -19,6 +19,7 @@ import {
 } from 'firebase/storage'
 import { AddPostType } from '../types/post.type'
 import { generateFirebaseFilename, getTypeOfFile } from '../utils/post.util'
+import { getSizeOfFile } from '../utils/file.util'
 
 class MyFirebase {
   private firebaseApp: FirebaseApp
@@ -121,6 +122,7 @@ class MyFirebase {
             fileUrl: dowloadUrl,
             type: getTypeOfFile(file.name),
             userId,
+            fileSize: getSizeOfFile(file),
           }
 
           handleUploaded(data)

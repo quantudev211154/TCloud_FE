@@ -1,4 +1,4 @@
-import { PostTypeEnum } from '../types/enums/post-type.enum'
+import { PostTypeEnum } from '../types/enums/post.enum'
 
 export const generateFirebaseFilename = (filename: string) => {
   let result: string = ''

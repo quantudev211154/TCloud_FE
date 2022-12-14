@@ -4,9 +4,11 @@ import Header from '../components/header/Header'
 import { useAuthContext } from '../context/auth.context'
 import { useEffect } from 'react'
 import LoadingAuth from '../components/loading_auth/LoadingAuth'
+import { useFileMenuContext } from '../context/file-menu-context.context'
 
 const Dashboard = () => {
   const { isAuth, isLoading, checkAuth, currentUser } = useAuthContext()
+  const { setCurrentPost } = useFileMenuContext()
 
   useEffect(() => {
     const authenticate = async () => {
@@ -18,6 +20,10 @@ const Dashboard = () => {
     }
 
     authenticate()
+
+    window.onclick = () => {
+      setCurrentPost(undefined)
+    }
   }, [])
 
   if (isLoading) return <LoadingAuth />
@@ -25,11 +31,11 @@ const Dashboard = () => {
   if (!isAuth) return <Navigate to='/login' />
 
   return (
-    <div className='dashboard w-full min-h-screen flex justify-between'>
+    <div className='dashboard w-full h-screen max-h-screen flex justify-between'>
       <Sidebar />
-      <div className='flex-1 flex flex-col justify-start items-center'>
+      <div className='w-full h-full flex-1 flex flex-col justify-start items-center'>
         <Header />
-        <div className='flex-1 w-full px-3'>
+        <div className='flex-1 w-full pl-3 overflow-y-auto'>
           <Outlet />
         </div>
       </div>

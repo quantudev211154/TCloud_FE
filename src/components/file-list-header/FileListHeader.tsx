@@ -1,9 +1,9 @@
 const FileListHeader = () => {
   return (
-    <tr className='bg-slate-200'>
-      <td className='py-3'>Index</td>
-      <td>File name</td>
-      <td>Upload date</td>
+    <tr>
+      <th className='py-3 sticky top-0 font-medium'>File name</th>
+      <th className='sticky top-0 font-medium'>File size</th>
+      <th className='sticky top-0 font-medium'>Upload date</th>
     </tr>
   )
 }

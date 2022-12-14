@@ -19,7 +19,7 @@ const MyFiles = () => {
 
   if (isSuccess) {
     return (
-      <div className='overflow-hidden'>
+      <div className='overflow-hidden h-full'>
         <FilesList postsList={data.data.posts} />
       </div>
     )

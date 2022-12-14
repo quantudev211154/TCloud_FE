@@ -1,4 +1,4 @@
-import { PostTypeEnum } from './enums/post-type.enum'
+import { PostStatusEnum, PostTypeEnum } from './enums/post.enum'
 import { UserType } from './user.type'
 
 export type AddPostType = {
@@ -6,6 +6,7 @@ export type AddPostType = {
   fileUrl: string
   type: PostTypeEnum
   userId: string
+  fileSize: string
 }
 
 export type PostType = {
@@ -15,4 +16,6 @@ export type PostType = {
   type: PostTypeEnum
   user: UserType
   createdAt: string
+  fileSize: string
+  status: PostStatusEnum
 }

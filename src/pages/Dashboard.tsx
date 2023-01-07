@@ -5,6 +5,8 @@ import { useAuthContext } from '../context/auth.context'
 import { useEffect } from 'react'
 import LoadingAuth from '../components/loading_auth/LoadingAuth'
 import { useFileMenuContext } from '../context/file-menu-context.context'
+import FileMenuContext from '../components/file-menu-context/FileMenuContext'
+import PreviewFile from '../components/preview-file/PreviewFile'
 
 const Dashboard = () => {
   const { isAuth, isLoading, checkAuth, currentUser } = useAuthContext()
@@ -31,8 +33,10 @@ const Dashboard = () => {
   if (!isAuth) return <Navigate to='/login' />
 
   return (
-    <div className='dashboard w-full h-screen max-h-screen flex justify-between'>
+    <div className='dashboard relative w-full h-screen max-h-screen flex justify-between'>
       <Sidebar />
+      <FileMenuContext />
+      <PreviewFile />
       <div className='w-full h-full flex-1 flex flex-col justify-start items-center'>
         <Header />
         <div className='flex-1 w-full pl-3 overflow-y-auto'>

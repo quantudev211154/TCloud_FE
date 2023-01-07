@@ -1,20 +1,32 @@
 import { convertISODateToDayMonthYearFormat } from '../../../../server/src/utils/date.util'
 import { useFileMenuContext } from '../../context/file-menu-context.context'
 import { PostType } from '../../types/post.type'
+import { calContextMenuPos } from '../../utils/menu-context.util'
 
 type Props = {
   item: PostType
 }
 
 const FileItem = ({ item }: Props) => {
-  const { setCurrentPost, currentPost } = useFileMenuContext()
+  const {
+    setCurrentPost,
+    setCurrentPosition,
+    setOverflowState,
+    setInBackgroundPost,
+    currentPost,
+  } = useFileMenuContext()
 
   const onOpenContextMenu = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.preventDefault()
 
+    const pageX = event.pageX
+    const pageY = event.pageY
+
+    calContextMenuPos(pageX, pageY, setCurrentPosition, setOverflowState)
     setCurrentPost(item)
+    setInBackgroundPost(item)
   }
 
   return (

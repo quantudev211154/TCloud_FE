@@ -50,7 +50,7 @@ const UserInfo = () => {
           boxShadow:
             'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
         }}
-        className={`absolute min-w-[16rem] max-w-[25rem] bg-white right-0 top-full rounded-lg transition-all ${
+        className={`z-30 absolute min-w-[16rem] max-w-[25rem] bg-white right-0 top-full rounded-lg transition-all ${
           isShowUserInfo ? 'visible opacity-100' : 'invisible opacity-0'
         }`}
       >

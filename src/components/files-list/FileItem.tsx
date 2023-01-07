@@ -1,6 +1,6 @@
-import { convertISODateToDayMonthYearFormat } from '../../../../server/src/utils/date.util'
 import { useFileMenuContext } from '../../context/file-menu-context.context'
 import { PostType } from '../../types/post.type'
+import { convertISODateToDayMonthYearFormat } from '../../utils/date.utils'
 import { calContextMenuPos } from '../../utils/menu-context.util'
 
 type Props = {

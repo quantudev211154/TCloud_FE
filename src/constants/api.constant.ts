@@ -1,4 +1,7 @@
-export const HOST = 'http://localhost:8000/api/v1/'
+export const HOST =
+  !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000/api/v1/'
+    : 'https://tcloudbe-production.up.railway.app/api/v1/'
 export const LOGIN_API = HOST + 'auth/login'
 export const REGISTER_API = HOST + 'auth/register'
 export const LOGOUT_API = HOST + 'auth/logout/'
